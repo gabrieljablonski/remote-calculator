@@ -29,5 +29,6 @@ router.post(
   checkValidationResult,
   CalculationController.divide,
 );
+router.get('/:id[0-9a-z]', CalculationController.validate);
 
 export default router;

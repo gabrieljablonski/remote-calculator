@@ -32,4 +32,9 @@ export default class CalculationController extends BaseController {
     const { a, b } = req.body;
     super.sendResponse(req, res, await CalculationService.divide(a, b));
   }
+
+  static async validate(req: Request, res: Response): Promise<void> {
+    const { id } = req.params;
+    super.sendResponse(req, res, await CalculationService.validate(id));
+  }
 }

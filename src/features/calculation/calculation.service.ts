@@ -29,4 +29,10 @@ export default class CalculationService {
   ): Promise<ServiceResponse<{ calculation: Calculation }>> {
     throw new Error('not implemented yet');
   }
+
+  static async validate(
+    id: string,
+  ): Promise<ServiceResponse<{ calculation: Calculation }>> {
+    throw new Error('not implemented yet');
+  }
 }
