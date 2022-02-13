@@ -9,7 +9,16 @@
     "experimentalDecorators": true,
     "strict": true,
     "outDir": "./build",
-    "baseUrl": "src"
+    "baseUrl": "src",
+    "paths": {
+      "http/*": ["http/*"],
+      "config/*": ["config/*"],
+      "config": ["config"],
+      "entities/*": ["entities/*"],
+      "entities": ["entities"],
+      "features/*": ["features/*"],
+      "features": ["features"]
+    }
   },
   "include": [
     "src"

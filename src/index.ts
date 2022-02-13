@@ -3,8 +3,8 @@ import { createConnection } from 'typeorm';
 import * as http from 'http';
 import * as bodyParser from 'body-parser';
 
-import config from './config';
-import routes from './http/routes';
+import config from 'config';
+import routes from 'http/routes';
 
 createConnection()
   .then(async () => {
@@ -15,7 +15,7 @@ createConnection()
 
     app.use('/v1', routes);
 
-    server.listen(config.httpPort, '0.0.0.0', () => {
+    server.listen(config.httpPort, () => {
       // eslint-disable-next-line no-console
       console.log(`Server started on port ${config.httpPort}!`);
     });
