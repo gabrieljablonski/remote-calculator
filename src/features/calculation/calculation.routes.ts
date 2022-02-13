@@ -1,4 +1,6 @@
 import { Router } from 'express';
+
+import checkValidationResult from 'http/middlewares/checkValidationResult';
 import CalculationController from './calculation.controller';
 
 const router = Router();
@@ -6,25 +8,25 @@ const router = Router();
 router.post(
   '/sum',
   CalculationController.validateArgs(),
-  CalculationController.checkValidationResult,
+  checkValidationResult,
   CalculationController.sum,
 );
 router.post(
   '/subtract',
   CalculationController.validateArgs(),
-  CalculationController.checkValidationResult,
+  checkValidationResult,
   CalculationController.subtract,
 );
 router.post(
   '/multiply',
   CalculationController.validateArgs(),
-  CalculationController.checkValidationResult,
+  checkValidationResult,
   CalculationController.multiply,
 );
 router.post(
   '/divide',
   CalculationController.validateArgs(),
-  CalculationController.checkValidationResult,
+  checkValidationResult,
   CalculationController.divide,
 );
 
