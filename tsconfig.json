@@ -18,7 +18,9 @@
       "entities/*": ["entities/*"],
       "entities": ["entities"],
       "features/*": ["features/*"],
-      "features": ["features"]
+      "features": ["features"],
+      "utils/*": ["utils/*"],
+      "utils": ["utils"]
     }
   },
   "include": [
@@ -26,6 +28,6 @@
   ],
   "exclude": [
     "node_modules",
-    "tests"
+    "__tests__"
   ]
 }

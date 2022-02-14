@@ -11,24 +11,28 @@ router.post(
   checkValidationResult,
   CalculationController.sum,
 );
+
 router.post(
   '/subtract',
   CalculationController.validateArgs(),
   checkValidationResult,
   CalculationController.subtract,
 );
+
 router.post(
   '/multiply',
   CalculationController.validateArgs(),
   checkValidationResult,
   CalculationController.multiply,
 );
+
 router.post(
   '/divide',
   CalculationController.validateArgs(),
   checkValidationResult,
   CalculationController.divide,
 );
-router.get('/:id[0-9a-z]', CalculationController.validate);
+
+router.get('/:id([0-9a-z]+)', CalculationController.validate);
 
 export default router;

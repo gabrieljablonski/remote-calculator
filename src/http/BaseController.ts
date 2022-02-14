@@ -8,7 +8,8 @@ export default class BaseController {
     res: Response,
     response: ServiceResponse<unknown>,
   ): void {
-    const { status, message, data, success } = response;
+    const { status, message, data, success, headers } = response;
+    headers?.forEach(({ name, value }) => res.setHeader(name, value));
     res.status(status).send({ success, message, data });
   }
 }
