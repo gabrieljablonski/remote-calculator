@@ -1,14 +1,21 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import {
+  CalculationError,
+  OperationType,
+} from 'features/calculation/calculation.entity';
 import supertest from 'supertest';
-import { Connection, createConnection } from 'typeorm';
+import { createConnection, getConnection } from 'typeorm';
 
-const createServer = require('../build/utils/createServer');
+import createServer from '../http/createServer';
 
-const request = supertest(createServer.default());
-
-let db: Connection;
+const request = supertest(createServer());
 
 beforeAll(async () => {
-  db = await createConnection();
+  await createConnection();
+});
+
+afterAll(async () => {
+  await getConnection().close();
 });
 
 describe('Calculation endpoints', () => {
@@ -20,13 +27,14 @@ describe('Calculation endpoints', () => {
     expect(success).toBeTruthy();
 
     const { calculation } = data;
-    expect(calculation).toBeTruthy();
+    expect(calculation).toEqual(expect.anything());
 
-    const { id, args, operation, result, error } = data;
-    expect(operation).toEqual('SUM');
-    expect(error).toBeFalsy();
+    const { id, args, operation, result, error } = calculation;
+    expect(operation).toEqual(OperationType.SUM);
+    expect(error).toBeNull();
     expect(result).toEqual(a + b);
   });
+
   it('POST /calculation/subtract should return the subtraction', async () => {
     const a = 10;
     const b = 2;
@@ -35,13 +43,14 @@ describe('Calculation endpoints', () => {
     expect(success).toBeTruthy();
 
     const { calculation } = data;
-    expect(calculation).toBeTruthy();
+    expect(calculation).toEqual(expect.anything());
 
-    const { id, args, operation, result, error } = data;
-    expect(operation).toEqual('SUBTRACT');
-    expect(error).toBeFalsy();
+    const { id, args, operation, result, error } = calculation;
+    expect(operation).toEqual(OperationType.SUBTRACT);
+    expect(error).toBeNull();
     expect(result).toEqual(a - b);
   });
+
   it('POST /calculation/multiply should return the multiplication', async () => {
     const a = 10;
     const b = 2;
@@ -50,13 +59,14 @@ describe('Calculation endpoints', () => {
     expect(success).toBeTruthy();
 
     const { calculation } = data;
-    expect(calculation).toBeTruthy();
+    expect(calculation).toEqual(expect.anything());
 
-    const { id, args, operation, result, error } = data;
-    expect(operation).toEqual('MULTIPLY');
-    expect(error).toBeFalsy();
+    const { id, args, operation, result, error } = calculation;
+    expect(operation).toEqual(OperationType.MULTIPLY);
+    expect(error).toBeNull();
     expect(result).toEqual(a * b);
   });
+
   it('POST /calculation/divide should return the division', async () => {
     const a = 10;
     const b = 2;
@@ -65,27 +75,30 @@ describe('Calculation endpoints', () => {
     expect(success).toBeTruthy();
 
     const { calculation } = data;
-    expect(calculation).toBeTruthy();
+    expect(calculation).toEqual(expect.anything());
 
-    const { id, args, operation, result, error } = data;
-    expect(operation).toEqual('DIVIDE');
-    expect(error).toBeFalsy();
+    const { id, args, operation, result, error } = calculation;
+    expect(operation).toEqual(OperationType.DIVIDE);
+    expect(error).toBeNull();
     expect(result).toEqual(a / b);
   });
+
   it('POST /calculation/divide should return an error when dividing by zero', async () => {
     const a = 10;
-    const b = 2;
+    const b = 0;
     const res = await request.post('/v1/calculation/divide').send({ a, b });
     const { success, data } = res.body;
     expect(success).toBeTruthy();
 
     const { calculation } = data;
-    expect(calculation).toBeTruthy();
+    expect(calculation).toEqual(expect.anything());
 
-    const { id, args, operation, result, error } = data;
-    expect(operation).toEqual('DIVIDE');
-    expect(error).toEqual('DIVIDE_BY_ZERO');
+    const { id, args, operation, result, error } = calculation;
+    expect(operation).toEqual(OperationType.DIVIDE);
+    expect(error).toEqual(CalculationError.DIVIDE_BY_ZERO);
+    expect(result).toBeNull();
   });
+
   it('GET /calculation/<id> should return a previously made calculation', async () => {
     const a = 10;
     const b = 2;
@@ -94,22 +107,18 @@ describe('Calculation endpoints', () => {
     expect(success).toBeTruthy();
 
     const { calculation } = data;
-    expect(calculation).toBeTruthy();
+    expect(calculation).toEqual(expect.anything());
 
-    const { id, args, operation, result, error } = data;
-    expect(operation).toEqual('SUM');
-    expect(error).toBeFalsy();
+    const { id, args, operation, result, error } = calculation;
+    expect(operation).toEqual(OperationType.SUM);
+    expect(error).toBeNull();
     expect(result).toEqual(a + b);
 
     const res2 = await request.get(`/v1/calculation/${id}`);
-    const { success: valSuccess, data: valData } = res.body;
+    const { success: valSuccess, data: valData } = res2.body;
     expect(valSuccess).toBeTruthy();
 
     const { calculation: valCalculation } = valData;
-    expect(valCalculation).toMatchObject(calculation);
+    expect(calculation).toMatchObject(valCalculation);
   });
-});
-
-afterAll(() => {
-  db.close();
 });
