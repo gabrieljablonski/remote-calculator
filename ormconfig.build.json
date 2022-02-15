@@ -1,0 +1,16 @@
+{
+  "type": "mongodb",
+  "host": "localhost",
+  "port": 27017,
+  "database": "RemoteCalculator",
+  "synchronize": true,
+  "logging": false,
+  "entities": ["features/**/*.entity.{ts,js}"],
+  "migrations": ["migration/**/*.{ts,js}"],
+  "subscribers": ["subscriber/**/*.{ts,js}"],
+  "cli": {
+    "entitiesDir": "entities",
+    "migrationsDir": "migration",
+    "subscribersDir": "subscriber"
+  }
+}
