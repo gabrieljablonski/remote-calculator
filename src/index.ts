@@ -1,9 +1,8 @@
-import { createConnection } from 'typeorm';
-
 import config from 'config';
 import createServer from 'http/createServer';
+import { createDbConnection } from 'db';
 
-createConnection()
+createDbConnection()
   .then(() => {
     const server = createServer();
     server.listen(config.httpPort, () => {

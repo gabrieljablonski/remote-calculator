@@ -20,7 +20,9 @@
       "features/*": ["features/*"],
       "features": ["features"],
       "utils/*": ["utils/*"],
-      "utils": ["utils"]
+      "utils": ["utils"],
+      "logging": ["logging"],
+      "db": ["db"]
     }
   },
   "include": [
