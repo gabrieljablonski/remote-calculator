@@ -43,6 +43,6 @@
     "start": "set debug=* && NODE_PATH=./src ts-node-dev --respawn --transpile-only ./src/index.ts",
     "test": "NODE_ENV=test jest --testTimeout=3000 --config ./jest.config.js",
     "build": "rm -r build/; tsc --project tsconfig.json && tscpaths -p tsconfig.json -s ./src -o ./build",
-    "postbuild": "cp ormconfig.build.json build/ormconfig.json && cp .env build/ && cp package.json build/package.json && cp yarn.lock build/yarn.lock && cd build && yarn install --production --frozen-lockfile"
+    "postbuild": "cp ormconfig.build.json build/ormconfig.json && cp .env build/ && cp README.md build/ && cp package.json build/package.json && cp yarn.lock build/yarn.lock && cd build && yarn install --production --frozen-lockfile"
   }
 }
