@@ -24,12 +24,15 @@ export default class CalculationService {
     if (error) {
       return ServiceResponse.internalServerError(JSON.stringify(error));
     }
-    return ServiceResponse.ok('', { calculation }, [
-      {
-        name: CalculationService.UniqueIdHeaderName,
-        value: calculation.id.toHexString(),
-      },
-    ]);
+    return ServiceResponse.ok({
+      data: { calculation },
+      headers: [
+        {
+          name: CalculationService.UniqueIdHeaderName,
+          value: calculation.id.toHexString(),
+        },
+      ],
+    });
   }
 
   static async subtract(
@@ -46,12 +49,15 @@ export default class CalculationService {
     if (error) {
       return ServiceResponse.internalServerError(JSON.stringify(error));
     }
-    return ServiceResponse.ok('', { calculation }, [
-      {
-        name: CalculationService.UniqueIdHeaderName,
-        value: calculation.id.toHexString(),
-      },
-    ]);
+    return ServiceResponse.ok({
+      data: { calculation },
+      headers: [
+        {
+          name: CalculationService.UniqueIdHeaderName,
+          value: calculation.id.toHexString(),
+        },
+      ],
+    });
   }
 
   static async multiply(
@@ -68,12 +74,15 @@ export default class CalculationService {
     if (error) {
       return ServiceResponse.internalServerError(JSON.stringify(error));
     }
-    return ServiceResponse.ok('', { calculation }, [
-      {
-        name: CalculationService.UniqueIdHeaderName,
-        value: calculation.id.toHexString(),
-      },
-    ]);
+    return ServiceResponse.ok({
+      data: { calculation },
+      headers: [
+        {
+          name: CalculationService.UniqueIdHeaderName,
+          value: calculation.id.toHexString(),
+        },
+      ],
+    });
   }
 
   static async divide(
@@ -95,12 +104,15 @@ export default class CalculationService {
     if (error) {
       return ServiceResponse.internalServerError(JSON.stringify(error));
     }
-    return ServiceResponse.ok('', { calculation }, [
-      {
-        name: CalculationService.UniqueIdHeaderName,
-        value: calculation.id.toHexString(),
-      },
-    ]);
+    return ServiceResponse.ok({
+      data: { calculation },
+      headers: [
+        {
+          name: CalculationService.UniqueIdHeaderName,
+          value: calculation.id.toHexString(),
+        },
+      ],
+    });
   }
 
   static async validate(
@@ -113,6 +125,6 @@ export default class CalculationService {
     if (!calculation || error) {
       return ServiceResponse.notFound('calculation not found');
     }
-    return ServiceResponse.ok({ calculation });
+    return ServiceResponse.ok({ data: { calculation } });
   }
 }

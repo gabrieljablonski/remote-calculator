@@ -17,13 +17,13 @@ export default class ServiceResponse<DataType> {
 
   headers?: HttpHeader[];
 
-  constructor(
-    status?: number,
-    success?: boolean,
-    message?: string,
-    data?: DataType,
-    headers?: HttpHeader[],
-  ) {
+  constructor({
+    status,
+    success,
+    message,
+    data,
+    headers,
+  }: Partial<ServiceResponse<DataType>>) {
     this.status = status ?? 200;
     this.success = success ?? true;
     this.message = message;
@@ -31,38 +31,38 @@ export default class ServiceResponse<DataType> {
     this.headers = headers;
   }
 
-  static ok<DataType>(
-    messageOrData?: string | DataType,
-    data?: DataType,
-    headers?: HttpHeader[],
-  ): ServiceResponse<DataType> {
-    if (typeof messageOrData === 'string') {
-      return new ServiceResponse<DataType>(
-        200,
-        true,
-        messageOrData,
-        data,
-        headers,
-      );
-    }
-    return new ServiceResponse<DataType>(
-      200,
-      true,
-      undefined,
-      messageOrData,
+  static ok<DataType>({
+    message,
+    data,
+    headers,
+  }: Partial<ServiceResponse<DataType>>): ServiceResponse<DataType> {
+    return new ServiceResponse<DataType>({
+      status: 200,
+      success: true,
+      message,
+      data,
       headers,
-    );
+    });
   }
 
   static notFound(message?: string): ServiceResponse<null> {
-    return new ServiceResponse(404, false, message ?? 'not found');
+    return new ServiceResponse({
+      status: 404,
+      success: false,
+      message: message ?? 'not found',
+    });
   }
 
   static badArgs(errors: ValidationError[]) {
-    return new ServiceResponse(422, false, 'invalid args', { errors });
+    return new ServiceResponse({
+      status: 422,
+      success: false,
+      message: 'invalid args',
+      data: { errors },
+    });
   }
 
   static internalServerError(message?: string): ServiceResponse<null> {
-    return new ServiceResponse(500, false, message);
+    return new ServiceResponse({ status: 500, success: false, message });
   }
 }
