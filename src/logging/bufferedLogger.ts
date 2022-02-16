@@ -1,5 +1,7 @@
 import winston, { LogEntry } from 'winston';
 
+import config from 'config';
+
 export default class BufferedLogger {
   private flushInterval: number;
 
@@ -17,6 +19,9 @@ export default class BufferedLogger {
   }
 
   private setupFlushHandle() {
+    if (config.env === 'test') {
+      return;
+    }
     if (this.flushHandle) {
       clearInterval(this.flushHandle);
     }

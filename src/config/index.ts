@@ -10,6 +10,7 @@ dotenv.config();
 
 // eslint-disable-next-line import/no-mutable-exports
 let config = {} as {
+  env: string;
   httpPort: number;
   logging: {
     http: LoggerOptions;
@@ -22,6 +23,7 @@ function reloadConfig() {
     override: true,
   });
   config = {
+    env: process.env.NODE_ENV ?? 'development',
     httpPort: Number(process.env.REMOTE_CALCULATOR_HTTP_PORT) || 6160,
     logging: {
       http: {
