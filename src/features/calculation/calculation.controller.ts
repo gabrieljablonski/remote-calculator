@@ -7,13 +7,15 @@ import CalculationService from './calculation.service';
 export default class CalculationController extends BaseController {
   static validateArgs(): ValidationChain[] {
     return [
-      body('a', 'required')
+      body('a')
         .exists()
+        .withMessage('required')
         .bail()
         .isNumeric()
         .withMessage('should be a number'),
-      body('b', 'required')
+      body('b')
         .exists()
+        .withMessage('required')
         .bail()
         .isNumeric()
         .withMessage('should be a number'),
