@@ -10,15 +10,14 @@ POST /v1/calculation/sum
 POST /v1/calculation/subtract
 POST /v1/calculation/multiply
 POST /v1/calculation/divide
-GET /v1/calculation/:id
 ```
 
 The first 4 calculation endpoints accept exactly two arguments, `a` and `b`, which represent the arguments for the calculation. Sample JSON input:
 
 ```json
 {
-  "a": 17.3,
-  "b": -3
+  "a": 13.2,
+  "b": 17.3
 }
 ```
 
@@ -31,7 +30,7 @@ These endpoints will return a `calculation` object containing the result of the 
   args: number[]; // the calculation argument list (always `[a, b]` in this case)
   operation: 'SUM' | 'SUBTRACT' | 'MULTIPLY' | 'DIVIDE'; // the operation executed
   result: number | null; // the result of the operation. is `null` when an error occurs
-  error: 'DIVIDE_BY_ZERO' | null; // indicates an error ocurred (currently only division by zero)
+  error: 'DIVIDE_BY_ZERO' | null; // if not `null`, indicates an error ocurred (currently only division by zero)
 }
 ```
 
@@ -52,7 +51,12 @@ Sample calculation output:
 }
 ```
 
+```
+GET /v1/calculation/:id
+```
+
 The last endpoint is used to validate a previously made calculation, using the `calculation.id` field.
+It returns the same object returned when first performing the calculation.
 
 ### Settings
 
@@ -60,7 +64,7 @@ The last endpoint is used to validate a previously made calculation, using the `
 POST /v1/settings/reload
 ```
 
-This endpoint can be used to hotload changes to the configurationg in a `.env` file.
+This endpoint can be used to hotload changes to the `.env` configuration file.
 
 ## Running
 
@@ -72,8 +76,10 @@ Inside the build folder, after making the necessary changes to the `ormconfig.js
 
 ## Logging
 
-If enabled, the HTTP CSV logs are presented in the following format (calculation id is always `'-'` on requests to endpoints that do not perform a calculation):
+If enabled, the HTTP CSV logs are presented in the following format:
 
 ```
-<datetime>,<client address>,<http method>,<endpoint url>,<http status code>,<calculation id>,<request time>
+<datetime>,<client address>,<http method>,<endpoint url>,<http status code>,<calculation id>,<request execution time>
 ```
+
+`<calculation id>` is always `'-'` on requests to endpoints that do not perform a calculation.
