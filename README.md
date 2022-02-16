@@ -22,7 +22,7 @@ The first 4 calculation endpoints accept exactly two arguments, `a` and `b`, whi
 ```
 
 These endpoints will return a `calculation` object containing the result of the operation.
-`calculation` matching the interface:
+This object matches the interface:
 
 ```ts
 {
@@ -34,7 +34,7 @@ These endpoints will return a `calculation` object containing the result of the 
 }
 ```
 
-Sample calculation output:
+Sample JSON output:
 
 ```ts
 {
